@@ -4,7 +4,7 @@
 
 ## Tab group which tabs respect available space
 
-Have the same features as regular Odin Tab group + you can set color for tab and its contents.
+It has the same features as regular Odin Tab group, except it has different default group name (`_DefaultCompactTabGroup`) and you can set color for tab and its contents.
 
 ## Instalation
 
