@@ -10,9 +10,9 @@ It has the same features as regular Odin Tab group, except it has different defa
 
 Put `CompactTabGroup` folder into Unity project
 
-## Examble
+## Example
 
-It will produce the same result as in preview gif
+It will produce the same result as in the preview gif
 
 ```cs
 [HorizontalGroup("Hor", 0.2f, LabelWidth = 50)]
