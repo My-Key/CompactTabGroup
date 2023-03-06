@@ -11,7 +11,7 @@ public class CompactTabGroupAttribute : PropertyGroupAttribute, ISubGroupProvide
 	/// <summary>
 	/// The default tab group name which is used when the single-parameter constructor is called.
 	/// </summary>
-	public const string DEFAULT_NAME = "_DefaultNewTabGroup";
+	public const string DEFAULT_NAME = "_DefaultCompactTabGroup";
 	/// <summary>Name of the tab.</summary>
 	public string TabName;
 	/// <summary>Tab color expression</summary>
