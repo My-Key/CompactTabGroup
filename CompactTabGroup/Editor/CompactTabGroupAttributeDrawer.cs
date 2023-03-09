@@ -193,7 +193,7 @@ public class CompactTabGroupAttributeDrawer : OdinGroupDrawer<CompactTabGroupAtt
 	{
 		var options = GUILayoutOptions.Height(height).MinWidth(10);
 		var content = GUIHelper.TempContent(label);
-		var style = new GUIStyle(SirenixGUIStyles.ToolbarTab);
+		var style = SirenixGUIStyles.ToolbarTab;
 		var rect = GUILayoutUtility.GetRect(content, style, options);
 
 		GUIHelper.PushColor(color);
