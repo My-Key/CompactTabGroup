@@ -79,7 +79,7 @@ public class CompactTabGroupAttributeDrawer : OdinGroupDrawer<CompactTabGroupAtt
 
 		var currentIndex = Property.State.Get<int>(CURRENT_TAB_INDEX_KEY);
 
-		var backgroundColor = currentIndex >= 0 ? m_tabs[currentIndex].Color.GetValue() : Color.white;
+		var backgroundColor = currentIndex >= 0 && currentIndex < m_tabs.Count ? m_tabs[currentIndex].Color.GetValue() : Color.white;
 
 		// Animate background color while tab changing animation
 		if (m_tabGroup.T > 0f)
@@ -156,7 +156,7 @@ public class CompactTabGroupAttributeDrawer : OdinGroupDrawer<CompactTabGroupAtt
 				namesWidthSum = newTabSize;
 			}
 
-			if (ToolbarTab(index == currentIndex, tab.Title.GetValue(), TAB_HEIGHT, tab.Color.GetValue()) &&
+			if (ToolbarTab(index == currentIndex, tab.Title.GetValue(), TAB_HEIGHT, contextWidth, tab.Color.GetValue()) &&
 			    index != currentIndex)
 			{
 				m_prevIndex = currentIndex;
@@ -189,18 +189,28 @@ public class CompactTabGroupAttributeDrawer : OdinGroupDrawer<CompactTabGroupAtt
 		return true;
 	}
 
-	public static bool ToolbarTab(bool isActive, string label, float height, Color color)
+	public static bool ToolbarTab(bool isActive, string label, float height, float maxWidth, Color color)
 	{
-		var options = GUILayoutOptions.Height(height);
+		var options = GUILayoutOptions.Height(height).MinWidth(10);
 		var content = GUIHelper.TempContent(label);
-		var style = SirenixGUIStyles.ToolbarTab;
+		var style = new GUIStyle(SirenixGUIStyles.ToolbarTab);
 		var rect = GUILayoutUtility.GetRect(content, style, options);
 
 		GUIHelper.PushColor(color);
 		var pressed = GUI.Toggle(rect, isActive, string.Empty, style);
 		GUIHelper.PopColor();
 
-		GUI.Label(rect, content, SirenixGUIStyles.LabelCentered);
+		if (Event.current.type == EventType.Repaint)
+		{
+			var desiredSize = SirenixGUIStyles.LabelCentered.CalcSize(content);
+
+			var tooNarrow = desiredSize.x > maxWidth;
+
+			if (tooNarrow)
+				content.tooltip = label;
+			
+			GUI.Label(rect, content, tooNarrow ? SirenixGUIStyles.LeftAlignedCenteredLabel : SirenixGUIStyles.LabelCentered);
+		}
 
 		if (!pressed)
 			return false;
